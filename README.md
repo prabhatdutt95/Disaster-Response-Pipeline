@@ -26,6 +26,13 @@
 ## 1. Project Overview
 In this project using data engineering, I will analyze disaster data from <a href="https://appen.com/datasets/combined-disaster-response-data/" target="_blank">Figure Eight</a> to classify into relevant disaster messages.
 
+Improving assistance mechanism in providing aid to actual grievances requires classifying an enormous dataload of messages. Such classification can be a challenge as state offices, 911 authorities, emergency communications centers (ECC), and public safety answering points (PSAPs) who strive to identify and communicate with the distress individual/s.
+Such assignment of categories to distress messages can be a vital support to the victims as well as the aid-related authorities.
+
+Using this application, a user can enter their _Distress Messages_ to classify the message into 36 categories. Depending upon if the classification is relevant to their
+message, the applicable category will be [highlighted](#Popup).
+On selecting this category, a pop-up opens and takes the user's [current location](#Popup-result) and inform the particular authority for emergency.
+
 
 <a id='project-components'></a>
 
@@ -142,6 +149,8 @@ This will start the web application in your browser.
 
 ![Overview Figure2](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Overview_Figure2.JPG?raw=true)
 
+
+<a id="Popup"></a>
 **_Screenshot 4_**
 
 ![Alert Results](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Alert_Results.JPG?raw=true)
@@ -153,6 +162,7 @@ On selecting any of the relevant results, we get the following popup.
 
 ![Emergency Alert Message](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Emergency_Alert_Message.JPG?raw=true)
 
+<a id="Popup-result"></a>
 **_Screenshot 6_**
 
 ![Emergency_Popup_Location](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Emergency_Popup_Location.JPG?raw=true)
