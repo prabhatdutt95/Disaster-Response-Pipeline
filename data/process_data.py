@@ -1,6 +1,8 @@
 # import libraries
 import sys
 import pandas as pd
+from random import randrange
+
 from sqlalchemy import create_engine
 import sqlite3
 
@@ -59,6 +61,10 @@ def clean_data(df):
 
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column])
+        
+        # convert values to binary to handle multiclass values
+        # So if we get 2, we handle this by either assuming 2 as 1
+        categories[column] = categories[column].map(lambda x: randrange(0,2) if x > 1 or x < 0 else x)
     
     # Adding id column to categories dataset
     categories['id'] = df['id']
