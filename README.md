@@ -23,7 +23,7 @@
 <a id='project-overview'></a>
 
 ## 1. Project Overview
-In this project using data engineering, I will analyze disaster data from <a href="https://appen.com/resources/datasets/" target="_blank">Figure Eight</a> to classify into relevant disaster messages.
+In this project using data engineering, I will analyze disaster data from <a href="https://appen.com/datasets/combined-disaster-response-data/" target="_blank">Figure Eight</a> to classify into relevant disaster messages.
 
 
 <a id='project-components'></a>
@@ -50,12 +50,12 @@ Running [this command](#clean-cmd) **in the parent directory** will start the pr
 
 File _models/train_classifier.py_ contains machine learning pipeline that:
 
-- Loads data from the **SQLite database**
-- Splits this loaded data into training and testing sets
-- Builds a text processing and machine learning pipeline
-- Training on train dataset and tunes a model using GridSearchCV
+- Using pandas' _read_sql_table_, we load the data from the **SQLite database**
+- Splits this loaded data into training and testing sets using _train_test_split_ from _sklearn.model_selection_
+- Builds a text processing which includes normalizing, tokenizing and lemmatizing and, machine learning pipeline. 
+- Training on train dataset and tunes a model using _GridSearchCV_
 - Outputs result on the test dataset
-- Exports the final model-pipeline into a pickle file
+- Exports the final model-pipeline into a _pickle_ file
 
 <a id='flask'></a>
 
@@ -82,6 +82,8 @@ The application requires to be started from ETL pipeline stage
 python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
 ```
 
+![Stage1](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage1.JPG?raw=true)
+
 <a id='train-classify'></a>
 ### 3.2. Stage 2: ML Pipeline(Training and Classifying stage)
 
@@ -94,6 +96,14 @@ After Stage 1 is complete
 ```bat
 python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
 ```
+![Stage2-Initialize](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage2_init.JPG?raw=true)
+
+
+<a id='stage2-results'></a>
+![Stage2-Results1](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage2_results1.JPG?raw=true)
+
+![Stage2-Results2](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage2_results2.JPG?raw=true)
+
 
 <a id='run-flask'></a>
 ### 3.3. Stage 3: Running the Flask Web App
@@ -107,6 +117,9 @@ After Stage 2 is complete (the model is saved as pickle file)
 ```bat
 python run.py
 ```
+
+![Stage3](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage3.jpg?raw=true)
+
 
 This will start the web application in your browser.
 
@@ -137,9 +150,17 @@ On selecting any of the relevant results, we get the following popup.
 
 ![Emergency_Popup_Location](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Emergency_Popup_Location.JPG?raw=true)
 
+Note: "Location Found" doesnot actually takes your current location. This is only for demonstration purpose.
+
 
 ## 4. Conclusion
 
+From [Stage-2 Results](#stage2-results), We can see that:
+- Accuracy is ~0.95 (High)
+- Recall is 0.64 (Moderate)
+- F1-score is 0.67 (Moderate)
+
+So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
 
 
 ## 5. Files
