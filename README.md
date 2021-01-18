@@ -11,6 +11,7 @@
   - [ETL Pipeline](#etl_pipeline)
   - [ML Pipeline](#ml_pipeline)
   - [Flask Web App](#flask)
+- [Prerequisite](#prereq)
 - [Running](#project-running)
   - [ETL pipeline(Data Cleaning and Storing stage)](#cleaning)
   - [ML Pipeline(Training and Classifying stage)](#train-classify)
@@ -50,10 +51,10 @@ Running [this command](#clean-cmd) **in the parent directory** will start the pr
 
 File _models/train_classifier.py_ contains machine learning pipeline that:
 
-- Using pandas' _read_sql_table_, we load the data from the **SQLite database**
+- Using pandas' _read_sql_table_, load the data from the **SQLite database**
 - Splits this loaded data into training and testing sets using _train_test_split_ from _sklearn.model_selection_
 - Builds a text processing which includes normalizing, tokenizing and lemmatizing and, machine learning pipeline. 
-- Training on train dataset and tunes a model using _GridSearchCV_
+- Trains on train dataset and tunes a model using _GridSearchCV_
 - Outputs result on the test dataset
 - Exports the final model-pipeline into a _pickle_ file
 
@@ -63,16 +64,22 @@ File _models/train_classifier.py_ contains machine learning pipeline that:
 
 Running [this command](#web-cmd) **inside the app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need tents and water. We are in Silo, Thank you!"_.
 
+<a id="prereq"></a>
+## 3. Prerequisite:
+To run the code, you need to have the following:
+
+- Python (More Details: https://www.python.org/downloads/)
+- Jupyter (More Details: https://test-jupyter.readthedocs.io/en/latest/install.html)
 
 <a id='project-running'></a>
 
-## 3. Running
+## 4. Running
 
 The application requires to be started from ETL pipeline stage
 
 <a id='cleaning'></a>
 
-### 3.1. Stage 1: ETL pipeline(Data Cleaning and Storing stage)
+### 4.1. Stage 1: ETL pipeline(Data Cleaning and Storing stage)
 
 **Go to the project directory** and the run the following command:
 
@@ -85,7 +92,7 @@ python data/process_data.py data/disaster_messages.csv data/disaster_categories.
 ![Stage1](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage1.JPG?raw=true)
 
 <a id='train-classify'></a>
-### 3.2. Stage 2: ML Pipeline(Training and Classifying stage)
+### 4.2. Stage 2: ML Pipeline(Training and Classifying stage)
 
 After Stage 1 is complete
 
@@ -106,7 +113,7 @@ python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
 
 
 <a id='run-flask'></a>
-### 3.3. Stage 3: Running the Flask Web App
+### 4.3. Stage 3: Running the Flask Web App
 
 After Stage 2 is complete (the model is saved as pickle file)
 
@@ -153,7 +160,7 @@ On selecting any of the relevant results, we get the following popup.
 Note: "Location Found" doesnot actually takes your current location. This is only for demonstration purpose.
 
 
-## 4. Conclusion
+## 5. Conclusion
 
 From [Stage-2 Results](#stage2-results), We can see that:
 - Accuracy is ~0.95 (High)
@@ -163,7 +170,7 @@ From [Stage-2 Results](#stage2-results), We can see that:
 So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
 
 
-## 5. Files
+## 6. Files
 
 <pre>
 .
