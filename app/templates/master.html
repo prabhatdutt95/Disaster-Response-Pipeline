@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Distress Alert Hub</title>
+        <link rel="shortcut icon" href="assets/favicon.ico"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/f3cd3abe88.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <style>
+            html body {
+                overflow-x: hidden !important;
+            }
+            html {
+                position: relative;
+                min-height: 100%;
+            }
+            body {
+                /* Margin bottom by footer height */
+                margin-bottom: 60px;
+            }
+            .navbar {
+                z-index: 2;
+            }
+            .bg-custom {
+                background-color: #00000075!important;
+            }
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 60px;
+                line-height: 60px; /* Vertically center the text there */
+                background-color: #f5f5f5;
+            }
+              
+            .banner {
+                background: url('https://images.pexels.com/photos/36031/firefighter-fire-portrait-training.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative !important;
+                margin-top: -5rem;
+            }
+            .banner-content {
+                background-color: rgba(0, 0, 0, 0.61);
+                color: white;
+                padding-top: 6rem;
+            }
+            .input-group-text {
+                cursor: pointer !important;
+            }
+            .icon-large {
+                font-size: xx-large;
+            }
+            .alert-card {
+                cursor: pointer;
+                transition-timing-function: ease-in-out;
+            }
+            .alert-card i {
+                color: #28a745 !important;
+            }
+            .alert-card:hover i {
+                color: white !important;
+            }
+            .alert-card:hover {
+                background-color: #28a745;
+                color: white !important;
+                transform: scale(1.1);
+            }
+            .alert-card-disabled {
+                font-size: xx-large;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-custom">
+            <a class="navbar-brand" href="index">
+                <img src="./assets/logo.png" style="width: 15rem;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.udacity.com/" target="_blank">Made with Udacity <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Contact Me
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="https://www.linkedin.com/in/prabhat-dutt-154206113/" target="_blank">LinkedIn</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="https://github.com/prabhatdutt95/ML_pipeline_demo" target="_blank">Github</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="banner">
+            <div class="jumbotron banner-content">
+                <div class="container text-center">
+                    <h1 class=" display-2">Distress Alert Hub</h1>
+                    <h3>Analyzing message data for Distress response</h3>
+                    <hr />
+                
+                    <div class="row">
+                        <div class="col-lg-12 form-group-lg">
+                            <form action="/go" method="get">
+                                <input type="text" class="form-control form-control-lg" name="query" placeholder="Enter a message to classify"><br/>
+                                <button type="submit" class="btn btn-outline-light btn-lg" id="classify">Classify</button>
+                            </form>
+                        </div>
+                    </div>
+    
+                    {% block message %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="container pb-5">
+            {% block content %}
+                <div class="page-header">
+                    <h1 class="text-center">Overview of Training Dataset</h1>
+                </div>
+            {% endblock %}
+
+            {% for id in ids %}
+                <div id="{{id}}"></div>
+            {% endfor %}
+        </div>
+
+        <script type="text/javascript">
+            const graphs = {{figuresJSON | safe}};
+            const ids = {{ids | safe}};
+            for(let i in graphs) {
+                Plotly.plot(ids[i], graphs[i].data, graphs[i].layout);
+            }
+        </script>
+
+        <footer class="footer">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        Copyright © 2021 All rights reserved | This site was made by 
+                        <a class="ml-1" href="https://www.linkedin.com/in/prabhat-dutt-154206113/" target="_blank">Prabhat Dutt</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+</html>
