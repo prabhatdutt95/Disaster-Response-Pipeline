@@ -7,6 +7,7 @@
 ## Table of Contents
 
 - [Project Overview](#project-overview)
+- [Problem Statement](#problem_statement)
 - [Project Components](#project-components)
   - [ETL Pipeline](#etl_pipeline)
   - [ML Pipeline](#ml_pipeline)
@@ -33,16 +34,24 @@ Using this application, a user can enter their _Distress Messages_ to classify t
 message, the applicable category will be [highlighted](#Popup).
 On selecting this category, a pop-up opens and takes the user's [current location](#Popup-result) and inform the particular authority for emergency.
 
+<a id='problem_statement'></a>
+## 2. Problem Statement
+For a given query dates for a stock having inputs containing multiple metrics such as opening price (Open), highest price the stock traded at (High), how many stocks were traded (Volume) and closing price adjusted for stock splits and dividends (Adjusted Close); your system only needs to predict the Adjusted Close price.
+
+In order to solve the issue, I have created a stock price predictor which builds a Long Short-Term Memory(LSTM) model based on Adjusted Close for a certain period and predict the price for the next 'n' number of days.
+
+Additionally, I have also added Twitter Sentiment Analysis for that particular stock as an extra-edge to users in filtering stock data.
+
 
 <a id='project-components'></a>
 
-## 2. Project Components
+## 3. Project Components
 
 There are three components of this project:
 
 <a id='etl_pipeline'></a>
 
-### 2.1. ETL Pipeline
+### 3.1. ETL Pipeline
 
 File _data/process_data.py_ contains data cleaning pipeline that:
 
@@ -54,7 +63,7 @@ Running [this command](#clean-cmd) **in the parent directory** will start the pr
 
 <a id='ml_pipeline'></a>
 
-### 2.2. ML Pipeline
+### 3.2. ML Pipeline
 
 File _models/train_classifier.py_ contains machine learning pipeline that:
 
@@ -67,12 +76,12 @@ File _models/train_classifier.py_ contains machine learning pipeline that:
 
 <a id='flask'></a>
 
-### 2.3. Flask Web App
+### 3.3. Flask Web App
 
 Running [this command](#web-cmd) **inside the app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need tents and water. We are in Silo, Thank you!"_.
 
 <a id="prereq"></a>
-## 3. Prerequisite:
+## 4. Prerequisite:
 To run the code, you need to have the following:
 
 - Python (More Details: https://www.python.org/downloads/)
@@ -80,13 +89,13 @@ To run the code, you need to have the following:
 
 <a id='project-running'></a>
 
-## 4. Running
+## 5. Running
 
 The application requires to be started from ETL pipeline stage
 
 <a id='cleaning'></a>
 
-### 4.1. Stage 1: ETL pipeline(Data Cleaning and Storing stage)
+### 5.1. Stage 1: ETL pipeline(Data Cleaning and Storing stage)
 
 **Go to the project directory** and the run the following command:
 
@@ -99,7 +108,7 @@ python data/process_data.py data/disaster_messages.csv data/disaster_categories.
 ![Stage1](https://github.com/prabhatdutt95/Disaster-Response-Pipeline/blob/main/Screenshots/Stage1.JPG?raw=true)
 
 <a id='train-classify'></a>
-### 4.2. Stage 2: ML Pipeline(Training and Classifying stage)
+### 5.2. Stage 2: ML Pipeline(Training and Classifying stage)
 
 After Stage 1 is complete
 
@@ -120,7 +129,7 @@ python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
 
 
 <a id='run-flask'></a>
-### 4.3. Stage 3: Running the Flask Web App
+### 5.3. Stage 3: Running the Flask Web App
 
 After Stage 2 is complete (the model is saved as pickle file)
 
@@ -170,7 +179,7 @@ On selecting any of the relevant results, we get the following popup.
 Note: "Location Found" doesnot actually takes your current location. This is only for demonstration purpose.
 
 
-## 5. Conclusion
+## 6. Conclusion
 
 From [Stage-2 Results](#stage2-results), We can see that:
 - Accuracy is ~0.95 (High)
@@ -180,7 +189,7 @@ From [Stage-2 Results](#stage2-results), We can see that:
 So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
 
 
-## 6. Files
+## 7. Files
 
 <pre>
 .
